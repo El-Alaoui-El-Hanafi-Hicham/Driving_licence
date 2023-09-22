@@ -1,0 +1,11 @@
+.mat-stepper-horizontal {
+    margin-top: 8px;
+  }
+  
+  .mat-mdc-form-field {
+    margin-top: 16px;
+  }
+  /* In your component's CSS file or global styles */
+.form-field-container {
+    display: block; /* or display: flex; flex-direction: column; */
+  }

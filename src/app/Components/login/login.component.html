@@ -1,0 +1,41 @@
+<div class="login-container ">
+<div class="card d-flex align-items-center justify-content-center  col-md-6 col-sm-12 ">
+    <div class="card-header w-100 d-flex flex-column align-items-center justify-content-center ">
+      <img src="https://t3.ftcdn.net/jpg/02/85/37/94/360_F_285379448_ESNm6NMfZ0XPmU4l314Va1Jvgdfz9cMD.jpg" class="img-thumbnail w-25" alt="">  
+    </div>
+    <div class="card-body  w-100 ">
+        <div class="alert alert-danger" role="alert" *ngIf="this.LoginError">
+            {{this.LoginError}}
+          </div>
+<form class="m-auto" [formGroup]="loginFormGroup" (submit)="handleLogin()">
+    <div class="mb-3 w-100">
+        <mat-form-field class="w-100">
+            <mat-label>Email</mat-label>
+            <input class="w-100" matInput formControlName="email">
+            
+        </mat-form-field>
+        <div *ngIf="loginFormGroup.controls['email'].errors && loginFormGroup.controls['email'].touched">
+            <span class="text-danger"> {{this.getFieldsErrors("Email",loginFormGroup.controls['email'].errors)}}</span>
+        </div>
+           
+      </div>
+      <div class="mb-3">
+        <mat-form-field  class="w-100">
+            <mat-label>Enter your password</mat-label>
+            <input matInput [type]="hide ? 'password' : 'text'"  formControlName="password">
+            <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+              <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+            </button>
+          </mat-form-field>
+        <div *ngIf="loginFormGroup.controls['password'].errors && loginFormGroup.controls['password'].touched">
+          <span class="text-danger"> {{this.getFieldsErrors("Password",loginFormGroup.controls['password'].errors)}}</span>
+           </div>
+      </div>
+    <button type="submit" class="btn btn-primary mx-auto bg-success " [disabled]="!this.loginFormGroup.valid">Login</button>
+  </form>
+</div>
+<div class="card-footer w-100">
+You can register <a routerLink="/register">Here</a>
+</div>
+</div>
+</div>

@@ -1,0 +1,144 @@
+<div class="container-fluid py-4">
+      <div class="row Dash--main ">
+        
+        <div class="col-12 col-xl-4">
+          <div class="card h-100">
+            <div class="card-header pb-0 p-3">
+              <div class="row">
+                <div class="col-md-8 d-flex align-items-center">
+                  <h3 class="mb-0">Profile Information</h3>
+                </div>
+                <div class="col-md-4 text-end">
+                  <a href="javascript:;">
+                    <i class="fas fa-user-edit text-secondary text-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit Profile"></i>
+                  </a>
+                </div>
+              </div>
+            </div>
+            <div class="card-body p-3">
+            
+              <hr class="horizontal gray-light my-4">
+              <ul class="list-group">
+
+
+                <li class="list-group-item border-0 ps-0 pt-0 text-sm"><strong class="text-dark">Full Name:</strong> &nbsp;  {{AuthUser.fullName}}</li>
+                <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Mobile:</strong> &nbsp; {{AuthUser.phoneNumber}}</li>
+                <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Email:</strong> &nbsp;  {{AuthUser.email}}</li>
+                <li class="list-group-item border-0 ps-0 pb-0">
+                  <strong class="text-dark text-sm">Social:</strong> &nbsp;
+                  <a class="btn btn-facebook btn-simple mb-0 ps-1 pe-2 py-0" href="javascript:;">
+                    <i class="fab fa-facebook fa-lg"></i>
+                  </a>
+                  <a class="btn btn-twitter btn-simple mb-0 ps-1 pe-2 py-0" href="javascript:;">
+                    <i class="fab fa-twitter fa-lg"></i>
+                  </a>
+                  <a class="btn btn-instagram btn-simple mb-0 ps-1 pe-2 py-0" href="javascript:;">
+                    <i class="fab fa-instagram fa-lg"></i>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-xl-4">
+          <div class="card h-100">
+            <div class="card-header pb-0 p-3">
+              <div class="row">
+                <div class="col-md-8 d-flex align-items-center">
+                  <h3 class="mb-0">Ordered Test</h3>
+                <!-- Button trigger modal -->
+
+                </div>
+                <div class="col-md-4 text-end">
+                  <a href="javascript:;">
+                    <i class="fas fa-user-edit text-secondary text-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit Profile"></i>
+                  </a>
+                </div>
+                
+              </div>
+            </div>
+            <div class="card-body p-3 "*ngIf="AuthUser.dateToPassTest">
+              <!-- <hr class="horizontal gray-light my-4"> -->
+              <p>{{AuthUser.OrderedTestCategory.description}}</p>
+              <ul class="list-group" *ngIf="OrderedTest">
+
+                <li class="list-group-item border-0 ps-0 pt-0 text-sm"><strong class="text-dark">Title :</strong> &nbsp;  {{OrderedTest.title}}</li>
+                <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Category:</strong> &nbsp; {{AuthUser.orderedTest.category}}</li>
+                <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Date:</strong> &nbsp;  {{AuthUser.dateToPassTest}}</li>
+                <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Type:</strong> &nbsp;  {{AuthUser.OrderedTestCategory.id}}</li>
+              </ul>
+             
+            </div>
+            <div class="card-body p-3 "*ngIf="AuthUser.dateToPassTest==''">
+              <p class="text-center text-danger" *ngIf="AuthUser.dateToPassTest==''">No Test Ordered</p>
+
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-xl-4">
+          <div class="card h-100">
+            <div class="card-header pb-0 p-3">
+              <h3 class="mb-0">TESTS</h3>
+            </div>
+            <div class="card-body p-3">
+              <ul class="list-group">
+                <li class="list-group-item border-0 d-flex align-items-center px-0 mb-2" *ngFor="let test of Tests">
+                  <div class="avatar me-3">
+                    
+                    <img  [src]="test.thumbnail" alt="kal" class="border-radius-lg shadow">
+                  </div>
+                  <div class="d-flex align-items-start flex-column justify-content-center">
+                    <h6 class="mb-0 text-sm">{{test.title.toUpperCase()}}</h6>
+                    <p class="mb-0 text-xs">{{test.category.toUpperCase()}}  ----- {{test.price}} DH</p>
+                  </div>
+                  <a class="btn btn-link pe-3 ps-0 mb-0 ms-auto" href="javascript:;"  routerLink="/reserve/{{test.id}}">Order</a>
+                </li>
+                
+              </ul>
+            </div>
+          </div>
+          
+        </div>
+        <div class="row mt-4 Dash--main">
+       
+        <div class="col-lg-6">
+          <div class="card z-index-2">
+            <div class="card-header pb-0">
+              <h3>Driving Licences overview</h3>
+              <p class="text-sm">
+                <i class="fa fa-arrow-up text-success"></i>
+                <span class="font-weight-bold">Most people prefere to </span> in 2021
+              </p>
+            </div>
+            <div class="card-body ">
+                <canvas id="licenseChart" class="licenseChart " height="300"></canvas>
+              
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <div class="card z-index-2">
+            <div class="card-header pb-0">
+              <h3>Driving Licences overview</h3>
+              <p class="text-sm">
+                <i class="fa fa-arrow-up text-success"></i>
+                <span class="font-weight-bold">Most people prefere to </span> in 2021
+              </p>
+            </div>
+            <div class="card-body">
+              <div class="chart">
+                <canvas id="myChart" class="myChart" height="300"></canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+        
+      </div>
+      <footer class="footer pt-3  ">
+        <div class="container-fluid text-center ">
+          Driving Licence 2023
+        </div>
+      </footer>
+    </div>
+<!--  -->

@@ -1,0 +1,200 @@
+<div class="container d-flex gap-2 flex-column ">
+  <mat-stepper [linear]="isLinear" #stepper class="p-2">
+    <mat-step [stepControl]="AuthUserInfoForm">
+     
+      <form [formGroup]="AuthUserInfoForm" class="row">
+     
+        <ng-template matStepLabel>Fill out Information</ng-template>
+        <mat-form-field class="col-md-5 col-sm-12">
+          <mat-label>Full Name</mat-label>
+          <input matInput placeholder="Last name, First name"  formControlName="fullName" required>
+        </mat-form-field>
+
+        <mat-form-field class="col-md-5 col-sm-12">
+          <mat-label>CNE</mat-label>
+          <input matInput placeholder="CNE"  formControlName="CNE" required>
+        </mat-form-field>
+
+        <mat-form-field class="col-md-5 col-sm-12">
+          <mat-label>Email</mat-label>
+          <input matInput placeholder="Email" formControlName="email" required>
+        </mat-form-field>
+
+        <mat-form-field class="col-md-5 col-sm-12">
+          <mat-label>Gender</mat-label>
+          <mat-select placeholder="Select gender" formControlName="gender">
+            <mat-option value="male">Male</mat-option>
+            <mat-option value="female">Female</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <div class="col-md-5 col-sm-12">
+          <mat-label>Has Medical Condition</mat-label>
+          <mat-radio-group matInput formControlName="hasMedicalCondition">
+            <mat-radio-button [value]="true" (checked)="authUser.hasMedicalCondition === true">Yes</mat-radio-button>
+            <mat-radio-button [value]="false" (checked)="authUser.hasMedicalCondition === false">No</mat-radio-button>
+          </mat-radio-group>
+        </div>
+        
+        <div class="col-md-5 col-sm-12">
+          <mat-label>Criminal History</mat-label>
+          <mat-radio-group matInput formControlName="isCriminal">
+            <mat-radio-button [value]="true" (checked)="authUser.isCriminal === true">Yes</mat-radio-button>
+            <mat-radio-button [value]="false" (checked)="authUser.isCriminal === false">No</mat-radio-button>
+          </mat-radio-group>
+        </div>
+
+        <div>
+          {{AuthUserInfoForm.errors}}
+          <button mat-button matStepperNext [disabled]="!AuthUserInfoForm.valid">Next</button>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step [stepControl]="paymentFormGroup">
+      <form [formGroup]="paymentFormGroup" class="row">
+     
+        <ng-template matStepLabel>Payment Information</ng-template>
+        <mat-form-field class="col-md-5 col-sm-12">
+          <mat-label>Cardholder Name</mat-label>
+          <input matInput placeholder="Cardholder Name"  formControlName="cardholderName" required>
+        </mat-form-field>
+
+        <mat-form-field class="col-md-5 col-sm-12">
+          <mat-label>Card Number</mat-label>
+          <input matInput placeholder="Card Number"  formControlName="cardNumber" required>
+        </mat-form-field>
+
+        <mat-form-field class="col-md-5 col-sm-12">
+          <mat-label>Expiration Mouth</mat-label>
+          <input matInput placeholder="Expiration Month"  formControlName="expirationMonth" required>
+        </mat-form-field>
+        <mat-form-field class="col-md-5 col-sm-12">
+          <mat-label>Expiration Year</mat-label>
+          <input matInput placeholder="Expiration Year"  formControlName="expirationYear" required>
+        </mat-form-field>
+        <mat-form-field class="col-md-5 col-sm-12">
+          <mat-label>CVV</mat-label>
+          <input matInput placeholder="CVV"  formControlName="cvv" required>
+        </mat-form-field>
+        <mat-form-field class="col-md-5 col-sm-12">
+          <mat-label>Billing Address</mat-label>
+          <input matInput placeholder="Billing Address"  formControlName="billingAddress" required>
+        </mat-form-field>
+        
+
+        <div class="col-md-5 col-sm-12">
+          <mat-label>Payment Method</mat-label>
+          <mat-radio-group matInput formControlName="paymentMethod">
+            <mat-radio-button value="MasterCard"> Master Card</mat-radio-button>
+            <mat-radio-button value="Paypal">Paypal</mat-radio-button>
+          </mat-radio-group>
+        </div>
+        <mat-checkbox  value="" formControlName="termsAndConditions" color="primary">Terms And Conditions </mat-checkbox>
+
+        <div>
+          <button mat-button matStepperNext [disabled]="!paymentFormGroup.valid">Next</button>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step [stepControl]="TestFormGroup">
+        <ng-template matStepLabel>Test Information</ng-template>
+       <div class="d-flex align-items-center flex-column">
+        <h3 > Choose Test Information :</h3>
+        <div *ngIf="SelectedCategory?.description!=''" class="alert-success alert w-100 text-white">
+<h5 class="text-white">Description: </h5>
+<p>{{SelectedCategory.description}}</p>
+<ul>
+  <li *ngFor="let item in SelectedCategory?.specs">{{item}}</li>
+</ul>
+</div>
+        <form [formGroup]="TestFormGroup" class="row align-items-center">
+        <div class="col-md-5 col-sm-12">
+            <mat-form-field>
+                <mat-label class="text-uppercase fw-bold">Choose Type :</mat-label>
+                <mat-select placeholder="Select Type" formControlName="type" (selectionChange)="loadTypeInfo()" >
+                  <mat-option [value]="category?.id" *ngFor="let category of categoryInfo">{{category.id}}</mat-option>
+                </mat-select>
+              </mat-form-field>
+          
+        </div>
+      
+        <div class="col-md-5 col-sm-12">
+
+        <mat-label class="text-uppercase fw-bold">Choose Date :</mat-label>
+       
+        <mat-button-toggle-group name="fontStyle" aria-label="Font Style" formControlName="choosedDate">
+            <mat-button-toggle value ="{{date}}"*ngFor="let date of this.test?.date" >{{date}}</mat-button-toggle>
+        </mat-button-toggle-group>
+        </div>
+        
+    </form>
+  </div>
+  <button mat-button matStepperPrevious>Back</button>
+  <button mat-button matStepperNext  [disabled]="!TestFormGroup.valid">Next</button>
+
+</mat-step>
+<mat-step >
+      <ng-template matStepLabel>Done</ng-template>
+      <div class="d-flex row gap-5 align-items-center justify-content-center">
+      <mat-card class=" row gap-5  d-flex flex-column justify-content-center align-items-center text-center">
+        <mat-card-header> <span class="display-6 m-auto"> Personnal Info</span></mat-card-header>
+        <mat-card-content class=" d-flex flex-row gap-5 flex-wrap">
+    <div class=" d-flex flex-column">
+        <mat-label class="text-uppercase fw-bold">Name :</mat-label>
+        <span>{{this.AuthUserInfoForm.value.fullName}}</span>
+    </div>
+    <div class=" d-flex flex-column">
+        <mat-label class="text-uppercase fw-bold">Card Holder Name : </mat-label>
+        <span>{{this.paymentFormGroup.value.cardholderName}}</span>
+    </div>
+    <div class=" d-flex flex-column">
+        <mat-label class="text-uppercase fw-bold">Expiration Date :</mat-label>
+        <span>{{this.paymentFormGroup.value.expirationMonth}} - {{this.paymentFormGroup.value.expirationYear}}</span>
+    </div>
+    <div class=" d-flex flex-column">
+        <mat-label class="text-uppercase fw-bold">CVV :</mat-label>
+        <span>{{this.paymentFormGroup.value.cvv}}</span>
+    </div>
+    <div class=" d-flex flex-column">
+        <mat-label class="text-uppercase fw-bold">Payment Method :</mat-label>
+        <span>{{this.paymentFormGroup.value.paymentMethod}}</span>
+    </div>
+    <div class=" d-flex flex-column">
+        <mat-label class="text-uppercase fw-bold">Payment Amount :</mat-label>
+        <span>{{this.test.price}} DH</span>
+    </div>
+
+        <div class=" d-flex flex-column">
+            <mat-label class="text-uppercase fw-bold">Title :</mat-label>
+            <span>{{this.test.title}}</span>
+        </div>
+        <div class=" d-flex flex-column">
+            <mat-label class="text-uppercase fw-bold">date : </mat-label>
+            <span> {{this.TestFormGroup.value.choosedDate}}</span>
+        </div>
+        <div class=" d-flex flex-column">
+            <mat-label class="text-uppercase fw-bold">Category :</mat-label>
+            <span>{{(this.test.category).toUpperCase() }}</span>
+        </div>
+        <div class=" d-flex flex-column">
+            <mat-label class="text-uppercase fw-bold">type :</mat-label>
+            <span>{{SelectedCategory.id}}</span>
+        </div>
+        <div class=" d-flex flex-column">
+            <mat-label class="text-uppercase fw-bold">price :</mat-label>
+            <span>{{this.test.price}}</span>
+        </div>
+        <div class=" d-flex flex-column">
+            <mat-label class="text-uppercase fw-bold">price :</mat-label>
+            <span>{{this.test.price}} DH</span>
+        </div>
+    </mat-card-content>
+    </mat-card> 
+</div>
+    <div class="m-2">
+        <button mat-button matStepperPrevious>Back</button>
+        <button mat-button  (click)="addParticipant()">Order</button>
+      </div>
+    </mat-step> 
+  </mat-stepper>
+</div>

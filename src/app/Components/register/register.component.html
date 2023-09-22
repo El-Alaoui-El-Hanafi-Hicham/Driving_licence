@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+
+  <div class="container">
+    <div class="card d-flex align-items-center justify-content-center my-5 col-md-12 col-sm-12 ">
+    <div class="card-header w-50 d-flex flex-column align-items-center justify-content-center ">
+      <img src="https://t3.ftcdn.net/jpg/02/85/37/94/360_F_285379448_ESNm6NMfZ0XPmU4l314Va1Jvgdfz9cMD.jpg" class="img-thumbnail w-25" alt="">  
+    </div>
+    <div class="card-body  w-100 ">
+        <span class="text-danger">{{this.Error}}</span>
+    <form [formGroup]="personalInfoForm" class="row" (ngSubmit)="this.handleRegisterUser()">
+      <h1 class="display-6 "> Personnal Info</h1>
+      <div class="mb-3 col-md-5">
+        <label for="fullName" class="form-label">Full Name</label>
+        <input type="text" class="form-control" formControlName="fullName" id="fullName" aria-describedby="fullNameHelp">
+        <div id="fullNameHelp" class="form-text">We'll never share your email with anyone else.</div>
+        <div *ngIf="personalInfoForm.controls['fullName'].errors && personalInfoForm.controls['fullName'].touched">
+       <span class="text-danger"> {{this.getFieldsErrors("Full Name",personalInfoForm.controls['fullName'].errors)}}</span>
+        </div>
+      </div>
+      <div class="mb-3 col-md-5">
+        <label for="Email" class="form-label">Email</label>
+        <input type="email" class="form-control" formControlName="email"  id="Email">
+        <div *ngIf="personalInfoForm.controls['email'].errors && personalInfoForm.controls['email'].touched">
+          <span class="text-danger"> {{this.getFieldsErrors("Email",personalInfoForm.controls['email'].errors)}}</span>
+           </div>
+      </div>
+      <div class="mb-3 col-md-5">
+        <label for="Email" class="form-label">Password</label>
+        <input type="password" class="form-control" formControlName="password"  id="password">
+        <div *ngIf="personalInfoForm.controls['password'].errors && personalInfoForm.controls['password'].touched">
+          <span class="text-danger"> {{this.getFieldsErrors("Password",personalInfoForm.controls['password'].errors)}}</span>
+           </div>
+      </div>
+      <div class="mb-3 col-md-5">
+        <label for="BirthDate" class="form-label">Date of Birth</label>
+        <input type="date" class="form-control" formControlName="birthDate" id="BirthDate">
+        <div *ngIf="personalInfoForm.controls['birthDate'].errors && personalInfoForm.controls['birthDate'].touched">
+          <span class="text-danger"> {{this.getFieldsErrors("Date of Birth",personalInfoForm.controls['birthDate'].errors)}}</span>
+           </div>
+      </div>
+      <div class="mb-3 col-md-5">
+        <label for="Gender" class="form-label">Gender</label>
+        <select class="form-select" formControlName="gender" aria-label="Default select example" >
+          <option selected disabled></option>
+          <option value="male">Male</option>
+          <option value="female">Female</option>
+        </select>
+        <div *ngIf="personalInfoForm.controls['gender'].errors && personalInfoForm.controls['gender'].touched">
+          <span class="text-danger"> {{this.getFieldsErrors("Gender",personalInfoForm.controls['gender'].errors)}}</span>
+           </div>
+      </div>
+      <div class="mb-3 col-md-5">
+        <label for="CNE" class="form-label">CNE</label>
+        <input type="text" class="form-control" id="CNECNE" formControlName="CNE" aria-describedby="fullNameHelp">
+        <div *ngIf="personalInfoForm.controls['CNE'].errors && personalInfoForm.controls['CNE'].touched">
+          <span class="text-danger"> {{this.getFieldsErrors("CNE",personalInfoForm.controls['CNE'].errors)}}</span>
+           </div>
+      </div>
+      <div class="mb-3 col-md-5">
+        <label for="IsCriminal" class="form-label">Criminal History</label>
+        <input type="checkbox" class="form-check-input" id="IsCriminal" formControlName="isCriminal" aria-describedby="IsCriminalHelp">
+        <div *ngIf="personalInfoForm.controls['isCriminal'].errors && personalInfoForm.controls['isCriminal'].touched">
+          <span class="text-danger"> {{this.getFieldsErrors("Criminal History",personalInfoForm.controls['isCriminal'].errors)}}</span>
+           </div>
+      </div>
+      <div class="mb-3 col-md-5">
+        <label for="hasMedicalCondition" class="form-label">Medical Condition</label>
+        <input type="checkbox" class="form-check-input" id="hasMedicalCondition"  formControlName="hasMedicalCondition" aria-describedby="hasMedicalConditionHelp">
+        <div *ngIf="personalInfoForm.controls['hasMedicalCondition'].errors && personalInfoForm.controls['hasMedicalCondition'].touched">
+          <span class="text-danger"> {{this.getFieldsErrors("Medical Condition",personalInfoForm.controls['hasMedicalCondition'].errors)}}</span>
+           </div>
+      </div>
+    <button type="submit" class="btn  btn-success" [disabled]="!personalInfoForm.valid">Submit</button>
+    </form>
+
+  </div>
+  <div class="card-footer w-100">
+    You can Login <a routerLink="/login">Here</a>
+    </div>
+</div>
+</div>
+</body>
+</html>
