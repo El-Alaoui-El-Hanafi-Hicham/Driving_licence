@@ -85,12 +85,12 @@ ngOnInit(): void {
 
 
   this.paymentFormGroup = this.fb.group({
-    cardholderName: ['das', Validators.required],
-    cardNumber: ['faksf', Validators.required],
-    expirationMonth: ['askf', Validators.required],
-    expirationYear: ['asf', Validators.required],
-    cvv: ['saf', Validators.required],
-    billingAddress: ['aksf', Validators.required],
+    cardholderName: ['', Validators.required],
+    cardNumber: ['', Validators.required],
+    expirationMonth: ['', Validators.required],
+    expirationYear: ['', Validators.required],
+    cvv: ['', Validators.required],
+    billingAddress: ['', Validators.required],
     
     paymentMethod: ['', Validators.required],
     termsAndConditions  : [true, Validators.requiredTrue],

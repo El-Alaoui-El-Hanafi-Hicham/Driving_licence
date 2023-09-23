@@ -16,6 +16,7 @@ import {MatTableModule} from '@angular/material/table';
 import {MatSnackBar, MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatExpansionModule} from '@angular/material/expansion';
 import {MatGridListModule} from '@angular/material/grid-list';
+import Swal from 'sweetalert2';
 
 const MaterialComponents=[
   MatSidenavModule,
@@ -34,7 +35,7 @@ const MaterialComponents=[
   MatTableModule,
   MatSnackBarModule,
   MatExpansionModule,
-  MatGridListModule
+  MatGridListModule,
   
 ]; 
 

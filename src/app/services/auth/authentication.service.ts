@@ -40,33 +40,36 @@ import { ValidationErrors } from '@angular/forms';
       })
       return of(false);
     }
-    registerUser(user :UserModule):Observable<UserModule>{
-      return this.http.post<UserModule>('http://localhost:3000/users', user).pipe(
-        switchMap(() => {
-          return this.getUsers().pipe(
-            map(() => {
-              this.authenticatedUser = user;
-              localStorage.setItem('authUser', JSON.stringify({ email: user.email, id: user.id }));
-              this.getUsers();
-              return user;
-            })
+    registerUser(user: UserModule): Observable<UserModule> {
+      console.log(this.users.find(u=>u.email==user.email))
+      if(!this.users.find(u=>u.email==user.email)){
+        return this.http.post<UserModule>('http://localhost:3000/users', user).pipe(
+          switchMap((registeredUser) => {
+            this.authenticatedUser = registeredUser;
+            localStorage.setItem('authUser', JSON.stringify({ email: registeredUser.email, id: registeredUser.id }));
+            return of(registeredUser);
+          }),
+          catchError((error) => {
+            return throwError(() => new Error('Registration failed. Please try again.'));
+          })
           );
-        }),
-        catchError((error) => {
-          return throwError(() => new Error('Registration failed. Please try again.')); 
-        })
-      );
+        }else{
+          return throwError(() => new Error('Email token choose another one.'));
         }
+    }
+    
       
   public authenticateUser(email : string, password :string ):  Observable<boolean>{
     console.log(email,password)
-    let user =this.users.find(user=>user.email==email)
+   
+      let user =this.users.find(user=>user.email==email)
+    console.log(user)
     if(user?.password ==password){
       this.authenticatedUser=user;
       localStorage.setItem('authUser',JSON.stringify({email:user.email,id:user.id}))
       return of(true);
     }else{
-
+      
       return throwError(()=>new Error("Bad Credentials"));
     }
     

@@ -26,13 +26,13 @@ constructor(private fb :FormBuilder,private authenticationService :Authenticatio
   ngOnInit(): void {
     this.personalInfoForm = this.fb.group({
       id:this.fb.control(nanoid()),
-      fullName : this.fb.control('Hicham',[Validators.required,Validators.minLength(5),Validators.maxLength(20)]),
-      birthDate: this.fb.control('21/12/2002',[Validators.required]),
+      fullName : this.fb.control('',[Validators.required,Validators.minLength(5),Validators.maxLength(20)]),
+      birthDate: this.fb.control('',[Validators.required]),
       isCriminal: this.fb.control(false,[Validators.required]),
-      email:this.fb.control('hicham@Fmi.cs',[Validators.required,Validators.email,Validators.minLength(10),Validators.maxLength(20)]),
-      gender:this.fb.control('male',Validators.required),
-      password: ['Pasda12das',[ Validators.required,Validators.pattern(this.passwordPattern)]],
-      CNE:this.fb.control('Cne239',[Validators.required,Validators.maxLength(10),Validators.minLength(5)]),
+      email:this.fb.control('',[Validators.required,Validators.email,Validators.minLength(10),Validators.maxLength(20)]),
+      gender:this.fb.control('',Validators.required),
+      password: ['',[ Validators.required,Validators.pattern(this.passwordPattern)]],
+      CNE:this.fb.control('',[Validators.required,Validators.maxLength(10),Validators.minLength(5)]),
       hasMedicalCondition:this.fb.control(false,[Validators.required]),
 
     })
@@ -41,15 +41,16 @@ constructor(private fb :FormBuilder,private authenticationService :Authenticatio
   handleRegisterUser() {
     if (this.personalInfoForm.valid) {
       this.authenticationService.registerUser(this.personalInfoForm.value).subscribe({
-        next: (user) => {
+        next: (registeredUser) => {
           // Registration successful
           this.Error = "Registered Successfully";
-  
-          this.handleLogin(user.email ,user.password )
-  
+          this.router.navigateByUrl("?message=welcome");
+
+          // Now, you can call handleLogin to log in the user
+          this.handleLogin(registeredUser.email, this.personalInfoForm.value.password);
         },
         error: (registrationError) => {
-          console.log("Registration Error: " + registrationError);
+          this.Error = "Registration Error: " + registrationError;
         },
       });
     }

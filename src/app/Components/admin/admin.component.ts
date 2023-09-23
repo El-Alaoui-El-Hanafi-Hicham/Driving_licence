@@ -8,6 +8,7 @@ import { TestModule } from 'src/app/modules/test/test.module';
 import { UserModule } from 'src/app/modules/user/user.module';
 import { AuthenticationService } from 'src/app/services/auth/authentication.service';
 import { TestService } from 'src/app/services/test/test.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-admin',
@@ -56,12 +57,20 @@ Tests! : TestModule[]
     private _snackBar: MatSnackBar,private route :Router,private testService :TestService){}
 
     ngOnInit(): void {
-
-this.getAllTests()
+      this.getAllTests()
       this.getAuthUser()
       this.getMessage()
+      this.changeTestDate()
       if(this.Message){
-        this.openSnackBar()
+        Swal.fire({
+          title: 'Notification',
+          text: this.Message,
+          icon: 'success', // You can use 'info', 'success', 'warning', 'error', or 'question'
+          toast: true,
+          position: 'top-end', // You can change the toast position
+          showConfirmButton: false,
+          timer: 3000, // Adjust the duration of the toast (in milliseconds)
+        });
         // Get the current page URL
 const currentURL = window.location.href;
 
@@ -157,7 +166,7 @@ window.history.replaceState({}, document.title, url.href);
 
 
   getAuthUser(){
-this.authService.getAuthUser().subscribe((data)=>{this.AuthUser=data; this.OrderedTest=data.orderedTest})
+this.authService.getAuthUser().subscribe((data)=>{console.log(data); this.AuthUser=data; this.OrderedTest=data.orderedTest})
   }
   getMessage(){
     this.activatedRoute.queryParamMap.subscribe(params => {
@@ -168,10 +177,7 @@ this.authService.getAuthUser().subscribe((data)=>{this.AuthUser=data; this.Order
 
       }
   
-      if (message) {
-        // Do something with the 'id' parameter
-        console.log('ID from URL:', message);
-      }
+  
     });
   }
   openSnackBar( ) {
@@ -183,12 +189,13 @@ this.authService.getAuthUser().subscribe((data)=>{this.AuthUser=data; this.Order
   }
 
   changeTestDate(){
-this.testService.findTest(this.AuthUser.orderedTest.id).subscribe({
+this.testService.findTest(this.OrderedTest?.id).subscribe({
   next:(test)=>{
+    console.log(test)
 // this.authService.
   },
   error:()=>{
-    console.log("couldn't find the test")
+    console.log("couldn't find the test :" )
   }
 })
   }
